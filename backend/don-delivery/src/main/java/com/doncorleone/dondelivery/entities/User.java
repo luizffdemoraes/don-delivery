@@ -37,9 +37,6 @@ public class User implements Serializable {
             inverseJoinColumns = @ JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @CreationTimestamp
-    private Instant instante = Instant.now();
-
     @Deprecated
     public User() {
 
@@ -95,14 +92,6 @@ public class User implements Serializable {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    public Instant getInstante() {
-        return instante;
-    }
-
-    public void setInstante(Instant instante) {
-        this.instante = instante;
     }
 
     @Override
