@@ -52,11 +52,12 @@ public class UserService {
 
     @Transactional
     public UserDTO insert(UserInsertDTO dto) {
-        User entity = new User();
-        copyDtoToEntity(dto, entity);
-        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
-        entity = repository.save(entity);
-        return new UserDTO(entity);
+            User entity = new User();
+            copyDtoToEntity(dto, entity);
+            entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+            entity = repository.save(entity);
+            return new UserDTO(entity);
+
     }
 
     @Transactional

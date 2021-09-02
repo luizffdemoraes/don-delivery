@@ -1,6 +1,7 @@
 package com.doncorleone.dondelivery.dto;
 
 import com.doncorleone.dondelivery.entities.User;
+import com.doncorleone.dondelivery.resources.exceptions.UniqueValue;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -17,6 +18,7 @@ public class UserDTO implements Serializable {
     private String lastName;
 
     @Email(message = "Informar e-mail válido")
+    @UniqueValue(domainClass = User.class, fieldName = "email", message = "Email já cadastrado.")
     private String email;
 
     Set<RoleDTO> roles = new HashSet<>();

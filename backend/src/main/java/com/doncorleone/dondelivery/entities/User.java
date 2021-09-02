@@ -35,8 +35,7 @@ public class User implements Serializable {
     private Set<Role> roles = new HashSet<>();
 
     @Deprecated
-    public User() {
-
+    public  User() {
     }
 
     public User(Long id, String firstName, String lastName, String email, String password) {

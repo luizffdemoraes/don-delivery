@@ -5,14 +5,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "tb_order")
@@ -42,17 +35,17 @@ public class Order implements Serializable{
      usando o JPA o Set é criado no banco a tabela de assoiação que faz o muitos para muitos.
      */
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tb_order_product",
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Set<Product> products = new HashSet<>();
 
+    @Deprecated
     public Order() {
     }
 
     public Order(Long id, String address, Double latitude, Double longitude, Instant moment, OrderStatus status) {
-        super();
         this.id = id;
         this.address = address;
         this.latitude = latitude;

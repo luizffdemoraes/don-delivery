@@ -2,16 +2,21 @@ package com.doncorleone.dondelivery.resources;
 
 import com.doncorleone.dondelivery.dto.UserDTO;
 import com.doncorleone.dondelivery.dto.UserInsertDTO;
+import com.doncorleone.dondelivery.resources.exceptions.StandardError;
 import com.doncorleone.dondelivery.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
+import java.sql.SQLException;
+import java.time.Instant;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -41,7 +46,7 @@ public class UserResource {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> insert(@RequestBody UserInsertDTO dto) {
+    public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserInsertDTO dto) {
         UserDTO newDto = service.insert(dto);
 
         // to create the URI of the new object created. The location of the new object
