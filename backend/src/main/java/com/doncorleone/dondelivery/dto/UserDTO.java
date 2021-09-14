@@ -1,6 +1,7 @@
 package com.doncorleone.dondelivery.dto;
 
 import com.doncorleone.dondelivery.entities.User;
+import com.doncorleone.dondelivery.resources.exceptions.Telephone;
 import com.doncorleone.dondelivery.resources.exceptions.UniqueValue;
 
 import javax.validation.constraints.Email;
@@ -21,17 +22,22 @@ public class UserDTO implements Serializable {
     @UniqueValue(domainClass = User.class, fieldName = "email", message = "Email já cadastrado.")
     private String email;
 
+    @Telephone(message = "Informar telefone válido")
+    @NotBlank
+    private String telephone;
+
     Set<RoleDTO> roles = new HashSet<>();
 
     public UserDTO() {
     }
 
-    public UserDTO(Long id, String firstName, String lastName, String email) {
+    public UserDTO(Long id, String firstName, String lastName, String email, String telephone) {
         super();
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.telephone = telephone;
     }
 
     public UserDTO(User entity) {
@@ -40,6 +46,7 @@ public class UserDTO implements Serializable {
         firstName = entity.getFirstName();
         lastName = entity.getLastName();
         email = entity.getEmail();
+        telephone = entity.getTelephone();
         entity.getRoles().forEach(role -> this.roles.add(new RoleDTO(role)));
     }
 
@@ -79,6 +86,7 @@ public class UserDTO implements Serializable {
         return roles;
     }
 
+    public String getTelephone() { return telephone; }
 
-
+    public void setTelephone(String telephone) { this.telephone = telephone; }
 }

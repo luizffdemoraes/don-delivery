@@ -25,6 +25,9 @@ public class User implements Serializable {
     private String email;
 
     @Column(nullable = false)
+    private String telephone;
+
+    @Column(nullable = false)
     private String password;
 
     //always that gets an user form DB, the roles also will be returned. Obligatory for SpringSecurity
@@ -38,11 +41,12 @@ public class User implements Serializable {
     public  User() {
     }
 
-    public User(Long id, String firstName, String lastName, String email, String password) {
+    public User(Long id, String firstName, String lastName, String email, String telephone, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.telephone = telephone;
         this.password = password;
     }
 
@@ -73,6 +77,10 @@ public class User implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getTelephone() { return telephone; }
+
+    public void setTelephone(String telephone) { this.telephone = telephone; }
 
     public String getPassword() {
         return password;
