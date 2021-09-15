@@ -52,11 +52,11 @@ public class UserService {
 
     @Transactional
     public UserDTO insert(UserInsertDTO dto) {
-            User entity = new User();
-            copyDtoToEntity(dto, entity);
-            entity.setPassword(passwordEncoder.encode(dto.getPassword()));
-            entity = repository.save(entity);
-            return new UserDTO(entity);
+        User entity = new User();
+        copyDtoToEntity(dto, entity);
+        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+        entity = repository.save(entity);
+        return new UserDTO(entity);
 
     }
 
@@ -92,6 +92,7 @@ public class UserService {
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
         entity.setEmail(dto.getEmail());
+        entity.setTelephone(dto.getTelephone());
 
         entity.getRoles().clear();
         for (RoleDTO roleDto : dto.getRoles()) {

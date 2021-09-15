@@ -23,7 +23,7 @@ public class UserDTO implements Serializable {
     private String email;
 
     @Telephone(message = "Informar telefone válido")
-    @NotBlank
+    @NotBlank(message = "Campo obrigatorio")
     private String telephone;
 
     Set<RoleDTO> roles = new HashSet<>();

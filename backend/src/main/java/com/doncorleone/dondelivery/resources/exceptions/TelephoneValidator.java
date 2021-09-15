@@ -6,7 +6,7 @@ import java.lang.annotation.Annotation;
 
 public class TelephoneValidator implements ConstraintValidator<Telephone, String> {
 
-    private String REGEX_TELEPHONE = "([0-9]{3}|[0-9]{2})?([0-9]{2})([0-9]{4,5})([0-9]{4})";
+    private String REGEX_TELEPHONE = "(\\(?\\d{2}\\)?\\s)?(\\d{4,5}\\-\\d{4})";
 
     @Override
     public void initialize(Telephone telephoneNumber) {
@@ -14,8 +14,7 @@ public class TelephoneValidator implements ConstraintValidator<Telephone, String
 
     @Override
     public boolean isValid(String contactField, ConstraintValidatorContext context) {
-        return contactField != null && contactField.matches(REGEX_TELEPHONE)
-                && (contactField.length() > 8) && (contactField.length() < 14);
+        return contactField.matches(REGEX_TELEPHONE);
     }
 
 
