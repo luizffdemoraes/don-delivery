@@ -6,9 +6,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class AppConfig {
+public class AppConfig implements WebMvcConfigurer {
 
     @Value("${jwt.secret}")
     private String jwtSecret;
@@ -28,6 +30,14 @@ public class AppConfig {
     @Bean
     public JwtTokenStore tokenStore() {
         return new JwtTokenStore(accessTokenConverter());
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("\n" +
+                        "https://don-delivery.herokuapp.com")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
     }
 
 }
