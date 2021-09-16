@@ -31,6 +31,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
+                .antMatchers("/*").permitAll();
+                /*
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/oauth/token/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
@@ -38,7 +40,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(OPERATOR_OR_ADMIN).hasAnyRole("OPERATOR", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, ADMIN).hasAnyRole("ADMIN")
                 .anyRequest().authenticated();
-
+                */
 
         http.cors().and().csrf().disable();
         // H2
