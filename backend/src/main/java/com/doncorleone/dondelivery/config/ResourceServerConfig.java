@@ -32,14 +32,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/oauth/token/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
-                .antMatchers(HttpMethod.POST, "/oauth/token/**").permitAll()
                 .antMatchers(HttpMethod.GET, OPERATOR_OR_ADMIN).permitAll()
                 .antMatchers(OPERATOR_OR_ADMIN).hasAnyRole("OPERATOR", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, ADMIN).hasAnyRole("ADMIN")
                 .anyRequest().authenticated();
 
-        
+
         http.cors().and().csrf().disable();
         // H2
         http.headers().frameOptions().disable();
