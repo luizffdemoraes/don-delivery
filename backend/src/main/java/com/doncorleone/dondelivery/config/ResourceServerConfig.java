@@ -39,7 +39,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, ADMIN).hasAnyRole("ADMIN")
                 .anyRequest().authenticated();
 
-        http.csrf().disable();
+        
+        http.cors().and().csrf().disable();
         // H2
         http.headers().frameOptions().disable();
     }
