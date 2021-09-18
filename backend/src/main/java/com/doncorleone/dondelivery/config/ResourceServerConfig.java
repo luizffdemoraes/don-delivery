@@ -56,6 +56,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(ADMIN).hasRole("ADMIN")
                 .anyRequest().authenticated();
 
+        http.cors().configurationSource(corsConfigurationSource());
         http.csrf().disable();
         // H2
         http.headers().frameOptions().disable();
@@ -63,7 +64,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         //http.cors().configurationSource(corsConfigurationSource());
     }
 
-    /*
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
@@ -84,5 +85,5 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
         return bean;
     }
-    */
+    
 }
