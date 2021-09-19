@@ -1,5 +1,6 @@
 package com.doncorleone.dondelivery.entities;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +34,7 @@ public class User implements UserDetails, Serializable {
     @Column(nullable = false)
     private String telephone;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
