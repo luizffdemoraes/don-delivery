@@ -1,34 +1,41 @@
 package com.doncorleone.dondelivery.entities;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_role")
-public class Role implements Serializable {
+public class Role implements Serializable, GrantedAuthority {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String authority;
+    private String description;
 
     @Deprecated
     public Role() {
     }
 
-    public Role(Long id, String authority) {
+    public Role(Long id, String description) {
         this.id = id;
-        this.authority = authority;
+        this.description = description;
+    }
+
+    @Override
+    public String getAuthority() {
+        return this.description;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getAuthority() {
-        return authority;
+    public String getDescription() {
+        return description;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.doncorleone.dondelivery.entities;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,28 +33,27 @@ public class User implements UserDetails, Serializable {
     @Column(nullable = false)
     private String telephone;
 
-    @JsonIgnore
     @Column(nullable = false)
-    private String password;
+    private String passwords;
 
     //always that gets an user form DB, the roles also will be returned. Obligatory for SpringSecurity
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable (name = "tb_user_role",
+    @JoinTable(name = "tb_user_role",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @ JoinColumn(name = "role_id"))
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
     @Deprecated
-    public  User() {
+    public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String email, String telephone, String password) {
+    public User(Long id, String firstName, String lastName, String email, String telephone, String passwords) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.telephone = telephone;
-        this.password = password;
+        this.passwords = passwords;
     }
 
     public Long getId() {
@@ -86,16 +84,20 @@ public class User implements UserDetails, Serializable {
         this.email = email;
     }
 
-    public String getTelephone() { return telephone; }
-
-    public void setTelephone(String telephone) { this.telephone = telephone; }
-
-    public String getPassword() {
-        return password;
+    public String getTelephone() {
+        return telephone;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getPasswords() {
+        return passwords;
+    }
+
+    public void setPasswords(String passwords) {
+        this.passwords = passwords;
     }
 
     public Set<Role> getRoles() {
@@ -110,6 +112,11 @@ public class User implements UserDetails, Serializable {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public String getPassword() {
+        return this.passwords;
     }
 
     @Override
@@ -161,7 +168,6 @@ public class User implements UserDetails, Serializable {
             return false;
         return true;
     }
-
 
 
 }
