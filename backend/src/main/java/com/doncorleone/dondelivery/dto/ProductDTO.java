@@ -2,6 +2,7 @@ package com.doncorleone.dondelivery.dto;
 
 import com.doncorleone.dondelivery.entities.Product;
 
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 
 public class ProductDTO implements Serializable {
@@ -12,17 +13,21 @@ public class ProductDTO implements Serializable {
     private String name;
     private Double price;
     private String description;
+    @Min(value = 0, message = "Não e permitido, quantidade negativa.")
+    private Integer quantity;
     private String imageUri;
+
 
     public ProductDTO() {
 
     }
 
-    public ProductDTO(Long id, String name, Double price, String description, String imageUri) {
+    public ProductDTO(Long id, String name, Double price, String description, Integer quantity, String imageUri) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
+        this.quantity = quantity;
         this.imageUri = imageUri;
     }
 
@@ -31,6 +36,7 @@ public class ProductDTO implements Serializable {
         id = entity.getId();
         name = entity.getName();
         price = entity.getPrice();
+        quantity = entity.getQuantity();
         description = entity.getDescription();
         imageUri = entity.getImageUri();
     }
@@ -66,6 +72,10 @@ public class ProductDTO implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Integer getQuantity() { return quantity; }
+
+    public void setQuantity(Integer quantity) { this.quantity = quantity; }
 
     public String getImageUri() {
         return imageUri;

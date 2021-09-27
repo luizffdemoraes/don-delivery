@@ -16,17 +16,19 @@ public class Product implements Serializable {
     private String name;
     private Double price;
     private String description;
+    private Integer quantity;
     private String imageUri;
 
     @Deprecated
     public Product() {
     }
 
-    public Product(Long id, String name, Double price, String description, String imageUri) {
+    public Product(Long id, String name, Double price, String description, Integer quantity, String imageUri) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
+        this.quantity = quantity;
         this.imageUri = imageUri;
     }
 
@@ -57,6 +59,10 @@ public class Product implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Integer getQuantity() { return quantity; }
+
+    public void setQuantity(Integer quantity) { this.quantity = quantity; }
 
     public String getImageUri() {
         return imageUri;
