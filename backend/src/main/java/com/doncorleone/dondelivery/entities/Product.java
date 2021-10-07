@@ -1,8 +1,10 @@
 package com.doncorleone.dondelivery.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_product")
@@ -16,20 +18,30 @@ public class Product implements Serializable {
     private String name;
     private Double price;
     private String description;
-    private Integer quantity;
     private String imageUri;
+    @JsonIgnore
+    @OneToMany(mappedBy = "id.product")
+    private Set<ItemOrder> itens = new HashSet<>();
 
     @Deprecated
     public Product() {
     }
 
-    public Product(Long id, String name, Double price, String description, Integer quantity, String imageUri) {
+    public Product(Long id, String name, Double price, String description, String imageUri) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
-        this.quantity = quantity;
         this.imageUri = imageUri;
+    }
+
+    @JsonIgnore
+    public List<Order> getOrders(){
+        List<Order> lista = new ArrayList<>();
+        for (ItemOrder x : itens){
+            lista.add(x.getOrder());
+        }
+        return lista;
     }
 
     public Long getId() {
@@ -60,16 +72,24 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public Integer getQuantity() { return quantity; }
-
-    public void setQuantity(Integer quantity) { this.quantity = quantity; }
-
     public String getImageUri() {
         return imageUri;
     }
 
     public void setImageUri(String imageUri) {
         this.imageUri = imageUri;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Set<ItemOrder> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemOrder> itens) {
+        this.itens = itens;
     }
 
     @Override

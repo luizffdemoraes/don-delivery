@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import com.doncorleone.dondelivery.dto.OrderDTO;
+import com.doncorleone.dondelivery.entities.Order;
 import com.doncorleone.dondelivery.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,22 @@ public class OrderResource {
     @Autowired
     private OrderService service;
 
+
+    @GetMapping
+    public ResponseEntity<OrderDTO> find(@PathVariable Long id){
+        OrderDTO orderDTO = service.find(id);
+        return ResponseEntity.ok().body(orderDTO);
+    }
+
+    @PostMapping
+    public ResponseEntity<Order> insert(@RequestBody Order order){
+        order = service.insert(order);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(order.getId()).toUri();
+        return ResponseEntity.created(uri).body(order);
+    }
+
+    /*
     @GetMapping
     public ResponseEntity<List<OrderDTO>> findAll(){
         List<OrderDTO> list = service.findAll();
@@ -43,4 +60,6 @@ public class OrderResource {
         return ResponseEntity.ok().body(dto);
 
     }
+
+     */
 }

@@ -1,13 +1,13 @@
 package com.doncorleone.dondelivery.dto;
 
 import com.doncorleone.dondelivery.entities.Order;
-import com.doncorleone.dondelivery.entities.OrderStatus;
+import com.doncorleone.dondelivery.entities.enums.OrderStatus;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OrderDTO implements Serializable {
 
@@ -21,7 +21,7 @@ public class OrderDTO implements Serializable {
 
     private Double longitude;
 
-    private Instant moment;
+    private Date moment;
 
     private OrderStatus status;
 
@@ -29,11 +29,8 @@ public class OrderDTO implements Serializable {
 
     private List<ProductDTO> products = new ArrayList<>();
 
-    public OrderDTO() {
 
-    }
-
-    public OrderDTO(Long id, String address, Double latitude, Double longitude, Instant moment, OrderStatus status, Double total) {
+    public OrderDTO(Long id, String address, Double latitude, Double longitude, Date moment, OrderStatus status, Double total) {
         this.id = id;
         this.address = address;
         this.latitude = latitude;
@@ -43,6 +40,7 @@ public class OrderDTO implements Serializable {
         this.total = total;
     }
 
+
     public OrderDTO(Order entity) {
         id = entity.getId();
         address = entity.getAddress();
@@ -50,11 +48,8 @@ public class OrderDTO implements Serializable {
         longitude = entity.getLongitude();
         moment = entity.getMoment();
         status = entity.getStatus();
-        total = entity.getTotal();
-        products = entity.getProducts()
-                .stream()
-                .map(x -> new ProductDTO(x)).collect(Collectors.toList());
     }
+
 
     public Long getId() {
         return id;
@@ -88,11 +83,11 @@ public class OrderDTO implements Serializable {
         this.longitude = longitude;
     }
 
-    public Instant getMoment() {
+    public Date getMoment() {
         return moment;
     }
 
-    public void setMoment(Instant moment) {
+    public void setMoment(Date moment) {
         this.moment = moment;
     }
 
@@ -103,7 +98,6 @@ public class OrderDTO implements Serializable {
     public void setStatus(OrderStatus status) {
         this.status = status;
     }
-
 
     public Double getTotal() {
         return total;
@@ -116,10 +110,4 @@ public class OrderDTO implements Serializable {
     public List<ProductDTO> getProducts() {
         return products;
     }
-
-
-
-
-
-
 }

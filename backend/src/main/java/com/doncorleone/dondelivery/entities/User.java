@@ -1,14 +1,14 @@
 package com.doncorleone.dondelivery.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -43,6 +43,12 @@ public class User implements UserDetails, Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders = new ArrayList<>();
+
+
     @Deprecated
     public User() {
     }
@@ -59,6 +65,8 @@ public class User implements UserDetails, Serializable {
     public Long getId() {
         return id;
     }
+
+    public void setId(Long id) { this.id = id; }
 
     public String getFirstName() {
         return firstName;
@@ -106,6 +114,14 @@ public class User implements UserDetails, Serializable {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override
@@ -169,5 +185,13 @@ public class User implements UserDetails, Serializable {
         return true;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", telephone='" + telephone + '\'' +
+                '}';
+    }
 }
