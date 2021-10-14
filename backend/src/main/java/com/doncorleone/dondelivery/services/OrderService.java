@@ -8,11 +8,13 @@ import com.doncorleone.dondelivery.repositories.ItemOrderRepository;
 import com.doncorleone.dondelivery.repositories.OrderRepository;
 import com.doncorleone.dondelivery.repositories.ProductRepository;
 import com.doncorleone.dondelivery.repositories.UserRepository;
+import com.doncorleone.dondelivery.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -32,9 +34,10 @@ public class OrderService {
     @Autowired
     private ItemOrderRepository itemOrderRepository;
 
-    public OrderDTO find(Long id) {
-        Order order = repository.getOne(id);
-        return new OrderDTO(order);
+    public Order find(Long id) {
+        Optional<Order> obj = repository.findById(id);
+        return obj.orElseThrow(() -> new ObjectNotFoundException(
+                "Objeto não encontrado! Id: " + id + ", Tipo: " + Order.class.getName()));
     }
 
     @Transactional

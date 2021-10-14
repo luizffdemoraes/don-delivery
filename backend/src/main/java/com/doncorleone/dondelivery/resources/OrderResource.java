@@ -26,10 +26,12 @@ public class OrderResource {
 
 
     @GetMapping
-    public ResponseEntity<OrderDTO> find(@PathVariable Long id){
-        OrderDTO orderDTO = service.find(id);
-        return ResponseEntity.ok().body(orderDTO);
+    @RequestMapping(value="/{id}")
+    public ResponseEntity<Order> find(@PathVariable Long id) {
+        Order obj = service.find(id);
+        return ResponseEntity.ok().body(obj);
     }
+
 
     @PostMapping
     public ResponseEntity<Order> insert(@RequestBody Order order){
