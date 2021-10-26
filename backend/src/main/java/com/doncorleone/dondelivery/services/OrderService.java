@@ -64,8 +64,14 @@ public class OrderService {
         order.setStatus(OrderStatus.DELIVRED);
         order = repository.save(order);
         return order;
+    }
 
-
+    @Transactional
+    public Order setCanceled(Long id) {
+        Order order = repository.getById(id);
+        order.setStatus(OrderStatus.CANCELED);
+        order = repository.save(order);
+        return order;
     }
 
     /*

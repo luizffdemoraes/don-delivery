@@ -45,6 +45,12 @@ public class OrderResource {
     public ResponseEntity<Order> setDelivered(@PathVariable Long id){
         Order dto = service.setDelivered(id);
         return ResponseEntity.ok().body(dto);
+    }
+
+    @PutMapping("/{id}/canceled")
+    public ResponseEntity<Order> setCanceled(@PathVariable Long id){
+        Order dto = service.setCanceled(id);
+        return ResponseEntity.ok().body(dto);
 
     }
 
