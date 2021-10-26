@@ -41,6 +41,13 @@ public class OrderResource {
         return ResponseEntity.created(uri).body(order);
     }
 
+    @PutMapping("/{id}/delivered")
+    public ResponseEntity<Order> setDelivered(@PathVariable Long id){
+        Order dto = service.setDelivered(id);
+        return ResponseEntity.ok().body(dto);
+
+    }
+
     /*
     @GetMapping
     public ResponseEntity<List<OrderDTO>> findAll(){
@@ -56,12 +63,7 @@ public class OrderResource {
         return ResponseEntity.created(uri).body(dto);
     }
 
-    @PutMapping("/{id}/delivered")
-    public ResponseEntity<OrderDTO> setDelivered(@PathVariable Long id){
-        OrderDTO dto = service.setDelivered(id);
-        return ResponseEntity.ok().body(dto);
 
-    }
 
      */
 }

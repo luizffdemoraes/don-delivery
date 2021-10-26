@@ -58,6 +58,15 @@ public class OrderService {
         return order;
     }
 
+    @Transactional
+    public Order setDelivered(Long id) {
+        Order order = repository.getOne(id);
+        order.setStatus(OrderStatus.DELIVRED);
+        order = repository.save(order);
+        return order;
+
+
+    }
 
     /*
     @Transactional
@@ -86,15 +95,7 @@ public class OrderService {
 
 
 
-    @Transactional
-    public OrderDTO setDelivered(Long id) {
-        Order order = repository.getOne(id);
-        order.setStatus(OrderStatus.DELIVRED);
-        order = repository.save(order);
-        return new OrderDTO(order);
 
-
-    }
 
      */
 
