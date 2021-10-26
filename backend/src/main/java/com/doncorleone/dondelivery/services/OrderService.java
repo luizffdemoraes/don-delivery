@@ -10,6 +10,8 @@ import com.doncorleone.dondelivery.repositories.ProductRepository;
 import com.doncorleone.dondelivery.repositories.UserRepository;
 import com.doncorleone.dondelivery.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,6 +74,12 @@ public class OrderService {
         order.setStatus(OrderStatus.CANCELED);
         order = repository.save(order);
         return order;
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Order> findAllPaged(Pageable pageable) {
+        Page<Order> list = repository.findAll(pageable);
+        return list;
     }
 
     /*

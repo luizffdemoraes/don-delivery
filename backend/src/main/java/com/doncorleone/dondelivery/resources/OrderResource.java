@@ -7,6 +7,8 @@ import com.doncorleone.dondelivery.dto.OrderDTO;
 import com.doncorleone.dondelivery.entities.Order;
 import com.doncorleone.dondelivery.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +34,13 @@ public class OrderResource {
         return ResponseEntity.ok().body(obj);
     }
 
+    @GetMapping
+    public ResponseEntity<Page<Order>> findAll(Pageable pageable) {
+
+        Page<Order> list = service.findAllPaged(pageable);
+
+        return ResponseEntity.ok().body(list);
+    }
 
     @PostMapping
     public ResponseEntity<Order> insert(@RequestBody Order order){
