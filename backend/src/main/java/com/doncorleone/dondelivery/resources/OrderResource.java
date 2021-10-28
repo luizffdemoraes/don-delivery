@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import com.doncorleone.dondelivery.dto.OrderDTO;
+import com.doncorleone.dondelivery.dto.OrderResponse;
 import com.doncorleone.dondelivery.entities.Order;
 import com.doncorleone.dondelivery.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class OrderResource {
 
 
     @GetMapping
-    @RequestMapping(value="/{id}")
+    @RequestMapping(value = "/{id}")
     public ResponseEntity<Order> find(@PathVariable Long id) {
         Order obj = service.find(id);
         return ResponseEntity.ok().body(obj);
@@ -42,8 +43,9 @@ public class OrderResource {
         return ResponseEntity.ok().body(list);
     }
 
+
     @PostMapping
-    public ResponseEntity<Order> insert(@RequestBody Order order){
+    public ResponseEntity<Order> insert(@RequestBody Order order) {
         order = service.insert(order);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(order.getId()).toUri();
@@ -51,19 +53,27 @@ public class OrderResource {
     }
 
     @PutMapping("/{id}/delivered")
-    public ResponseEntity<Order> setDelivered(@PathVariable Long id){
+    public ResponseEntity<Order> setDelivered(@PathVariable Long id) {
         Order dto = service.setDelivered(id);
         return ResponseEntity.ok().body(dto);
     }
 
     @PutMapping("/{id}/canceled")
-    public ResponseEntity<Order> setCanceled(@PathVariable Long id){
+    public ResponseEntity<Order> setCanceled(@PathVariable Long id) {
         Order dto = service.setCanceled(id);
         return ResponseEntity.ok().body(dto);
 
     }
 
     /*
+     @GetMapping
+    @RequestMapping(value = "/new/{id}")
+    public ResponseEntity<OrderResponse> findNew(@PathVariable Long id) {
+        OrderResponse obj = service.findNew(id);
+        return ResponseEntity.ok().body(obj);
+    }
+
+
     @GetMapping
     public ResponseEntity<List<OrderDTO>> findAll(){
         List<OrderDTO> list = service.findAll();

@@ -1,9 +1,11 @@
 package com.doncorleone.dondelivery.services;
 
 import com.doncorleone.dondelivery.dto.OrderDTO;
+import com.doncorleone.dondelivery.dto.OrderResponse;
 import com.doncorleone.dondelivery.entities.ItemOrder;
 import com.doncorleone.dondelivery.entities.Order;
 import com.doncorleone.dondelivery.entities.enums.OrderStatus;
+import com.doncorleone.dondelivery.entities.enums.PaymentStatus;
 import com.doncorleone.dondelivery.repositories.ItemOrderRepository;
 import com.doncorleone.dondelivery.repositories.OrderRepository;
 import com.doncorleone.dondelivery.repositories.ProductRepository;
@@ -15,8 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class OrderService {
@@ -42,13 +43,17 @@ public class OrderService {
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Order.class.getName()));
     }
 
+
+
     @Transactional
     public Order insert(Order order) {
         order.setId(null);
         order.setMoment(new Date());
         order.setUser(userRepository.findByEmail(order.getUser().getEmail()));
         order.setStatus(OrderStatus.PENDING);
+        order.setPaymentStatus(PaymentStatus.PENDING);
         order = repository.save(order);
+
 
         for (ItemOrder itemOrder : order.getItens()) {
             itemOrder.setProduct(productService.find(itemOrder.getProduct().getId()));
@@ -57,6 +62,7 @@ public class OrderService {
         }
 
         itemOrderRepository.saveAll(order.getItens());
+
         return order;
     }
 
@@ -79,6 +85,7 @@ public class OrderService {
     @Transactional(readOnly = true)
     public Page<Order> findAllPaged(Pageable pageable) {
         Page<Order> list = repository.findAll(pageable);
+
         return list;
     }
 
@@ -96,6 +103,11 @@ public class OrderService {
     }
 
 
+    public OrderDTO find(Long id) {
+        Order order = repository.getOne(id);
+        return new OrderDTO(order);
+        }
+
     @Transactional(readOnly = true)
     public List<OrderDTO> findAll() {
         List<Order> list = repository.findOrderWithProducts();
@@ -104,6 +116,37 @@ public class OrderService {
                 .map(x -> new OrderDTO(x))
                 .collect(Collectors.toList());
 
+
+
+      public OrderResponse findNew(Long id) {
+        Order order = repository.findById(id).get();
+        List<ItemOrder> itemOrders = (List<ItemOrder>) itemOrderRepository.findById(id).get();
+
+        System.out.println(itemOrders);
+
+        for (ItemOrder itemOrder : order.getItens()) {
+            itemOrder.setProduct(productService.find(itemOrder.getProduct().getId()));
+            itemOrder.setPrice(itemOrder.getProduct().getPrice());
+            itemOrder.setOrder(order);
+            System.out.println(order.toString());
+            System.out.println(itemOrder.toString());
+        }
+
+        System.out.println(order.toString());
+
+
+        OrderResponse orderResponse = OrderResponse.builder()
+                .id(order.getId())
+                .client(order.getUser().getFirstName() + order.getUser().getLastName())
+                .email(order.getUser().getEmail())
+                .address(order.getAddress())
+                //.itens(itensNew)
+                .total(order.getTotal())
+                .build();
+
+        System.out.println(orderResponse);
+        return orderResponse;
+    }
     }
 
 

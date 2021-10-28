@@ -1,7 +1,10 @@
 package com.doncorleone.dondelivery.entities;
 
 import com.doncorleone.dondelivery.entities.enums.OrderStatus;
+import com.doncorleone.dondelivery.entities.enums.PaymentStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
@@ -27,6 +30,7 @@ public class Order implements Serializable {
     @JsonFormat(pattern="dd/MM/yyyy HH:mm")
     private Date moment;
     private OrderStatus status;
+    private PaymentStatus paymentStatus;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -49,12 +53,19 @@ public class Order implements Serializable {
         this.status = status;
     }
 
+    /*
     public double getAmount(){
         double soma = 0.0;
         for (ItemOrder io : itens){
             soma = soma + io.getSubTotal();
         }
         return soma;
+    }
+
+     */
+
+    public Double getAmount(){
+        return itens.stream().mapToDouble( ItemOrder::getSubTotal ).sum();
     }
 
     public Long getId() {
@@ -103,6 +114,14 @@ public class Order implements Serializable {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     public Set<ItemOrder> getItens() {
