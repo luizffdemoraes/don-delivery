@@ -30,6 +30,8 @@ public class Order implements Serializable {
     @JsonFormat(pattern="dd/MM/yyyy HH:mm")
     private Date moment;
     private OrderStatus status;
+
+    @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
     @ManyToOne

@@ -62,7 +62,12 @@ public class OrderResource {
     public ResponseEntity<Order> setCanceled(@PathVariable Long id) {
         Order dto = service.setCanceled(id);
         return ResponseEntity.ok().body(dto);
+    }
 
+    @PutMapping("/{id}/payment/{idPayment}")
+    public ResponseEntity<Order> setPayment(@PathVariable Long id, @PathVariable Integer idPayment) {
+        Order dto = service.setPayment(id, idPayment);
+        return ResponseEntity.ok().body(dto);
     }
 
     /*

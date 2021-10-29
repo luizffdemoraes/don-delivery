@@ -78,6 +78,15 @@ public class OrderService {
     public Order setCanceled(Long id) {
         Order order = repository.getById(id);
         order.setStatus(OrderStatus.CANCELED);
+        order.setPaymentStatus(PaymentStatus.CANCELED);
+        order = repository.save(order);
+        return order;
+    }
+
+    @Transactional
+    public Order setPayment(Long id, Integer idPayment) {
+        Order order = repository.getById(id);
+        order.setPaymentStatus(PaymentStatus.toEnum(idPayment));
         order = repository.save(order);
         return order;
     }
@@ -85,9 +94,10 @@ public class OrderService {
     @Transactional(readOnly = true)
     public Page<Order> findAllPaged(Pageable pageable) {
         Page<Order> list = repository.findAll(pageable);
-
         return list;
     }
+
+
 
     /*
     @Transactional
