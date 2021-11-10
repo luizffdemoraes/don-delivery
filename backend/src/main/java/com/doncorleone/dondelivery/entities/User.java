@@ -1,6 +1,6 @@
 package com.doncorleone.dondelivery.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.doncorleone.dondelivery.domain.Pedido;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -46,7 +46,7 @@ public class User implements UserDetails, Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
-    private List<Order> orders = new ArrayList<>();
+    private List<Pedido> orders = new ArrayList<>();
 
 
     @Deprecated
@@ -116,11 +116,11 @@ public class User implements UserDetails, Serializable {
         this.roles = roles;
     }
 
-    public List<Order> getOrders() {
+    public List<Pedido> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(List<Pedido> orders) {
         this.orders = orders;
     }
 

@@ -1,9 +1,11 @@
 package com.doncorleone.dondelivery.repositories;
 
-import com.doncorleone.dondelivery.entities.ItemOrder;
+import com.doncorleone.dondelivery.domain.ItemPedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ItemOrderRepository extends JpaRepository<ItemOrder, Long> {
+public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Integer> {
+
 }
+

@@ -8,6 +8,7 @@ import com.doncorleone.dondelivery.entities.User;
 import com.doncorleone.dondelivery.repositories.RoleRepository;
 import com.doncorleone.dondelivery.repositories.UserRepository;
 import com.doncorleone.dondelivery.services.exceptions.DatabaseException;
+import com.doncorleone.dondelivery.services.exceptions.ObjectNotFoundException;
 import com.doncorleone.dondelivery.services.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -106,6 +108,24 @@ public class UserService implements UserDetailsService {
             Role role = roleRepository.getOne(roleDto.getId());
             entity.getRoles().add(role);
         }
+    }
+
+    public static User authenticated() {
+        try {
+            return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+
+    public User find(Long id) {
+
+        User user = UserService.authenticated();
+
+        Optional<User> obj = repository.findById(id);
+        return obj.orElseThrow(() -> new ObjectNotFoundException(
+                "Objeto não encontrado! Id: " + id + ", Tipo: " + User.class.getName()));
     }
 
     @Override

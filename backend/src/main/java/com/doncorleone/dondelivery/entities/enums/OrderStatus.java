@@ -2,7 +2,7 @@ package com.doncorleone.dondelivery.entities.enums;
 
 public enum OrderStatus {
 
-    PENDING, DELIVRED, CANCELED;
+    PENDING, EN_ROUTE, DELIVRED, CANCELED;
 
 }
 
