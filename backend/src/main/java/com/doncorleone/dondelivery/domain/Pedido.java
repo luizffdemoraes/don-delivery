@@ -36,9 +36,10 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private String address;
+    private String endereco;
     private Double latitude;
     private Double longitude;
+    private String descricao;
 
     @OneToMany(mappedBy="id.pedido")
     private Set<ItemPedido> itens = new HashSet<>();
@@ -46,14 +47,25 @@ public class Pedido implements Serializable {
     public Pedido() {
     }
 
-    public Pedido(Integer id, User user, String address, Double latitude, Double longitude, Date instante, OrderStatus status) {
+    public Pedido(Integer id, User user, String endereco, Double latitude, Double longitude, Date instante, OrderStatus status) {
         this.id = id;
         this.user = user;
-        this.address = address;
+        this.endereco = endereco;
         this.latitude = latitude;
         this.longitude = longitude;
         this.instante = instante;
         this.status = status;
+    }
+
+    public Pedido(Integer id, User user, String endereco, Double latitude, Double longitude, Date instante, OrderStatus status, String descricao) {
+        this.id = id;
+        this.user = user;
+        this.endereco = endereco;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.instante = instante;
+        this.status = status;
+        this.descricao = descricao;
     }
 
     public double getValorTotal() {
@@ -104,12 +116,12 @@ public class Pedido implements Serializable {
         this.user = user;
     }
 
-    public String getAddress() {
-        return address;
+    public String getEndereco() {
+        return endereco;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
     public Double getLatitude() {
@@ -134,6 +146,14 @@ public class Pedido implements Serializable {
 
     public void setItens(Set<ItemPedido> itens) {
         this.itens = itens;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     @Override
