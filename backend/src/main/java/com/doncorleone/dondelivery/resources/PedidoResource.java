@@ -1,6 +1,7 @@
 package com.doncorleone.dondelivery.resources;
 
 import com.doncorleone.dondelivery.domain.Pedido;
+import com.doncorleone.dondelivery.dto.PedidoResponse;
 import com.doncorleone.dondelivery.services.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,11 +29,11 @@ public class PedidoResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Pedido> insert(@Valid @RequestBody Pedido obj) {
-		obj = service.insert(obj);
+	public ResponseEntity<PedidoResponse> insert(@Valid @RequestBody Pedido obj) {
+		PedidoResponse pedidoResponse = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+		return ResponseEntity.created(uri).body(pedidoResponse);
 	}
 
 	@RequestMapping(method=RequestMethod.GET)

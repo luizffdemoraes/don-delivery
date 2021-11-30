@@ -3,6 +3,7 @@ package com.doncorleone.dondelivery.services;
 
 import com.doncorleone.dondelivery.domain.ItemPedido;
 import com.doncorleone.dondelivery.domain.Pedido;
+import com.doncorleone.dondelivery.dto.PedidoResponse;
 import com.doncorleone.dondelivery.entities.User;
 import com.doncorleone.dondelivery.entities.enums.OrderStatus;
 import com.doncorleone.dondelivery.entities.enums.PaymentStatus;
@@ -49,7 +50,7 @@ public class PedidoService {
 	}
 
 	@Transactional
-	public Pedido insert(Pedido obj) {
+	public PedidoResponse insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
 		obj.setUser(userRepository.findByEmail(obj.getUser().getEmail()));
@@ -64,7 +65,20 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
-		return obj;
+
+
+		return PedidoResponse.builder()
+				.id(obj.getId())
+				.descricao(obj.getDescricao())
+				.email(obj.getUser().getEmail())
+				.endereco(obj.getEndereco())
+				.instante(obj.getInstante())
+				.itens(obj.getItens())
+				.latitude(obj.getLatitude())
+				.longitude(obj.getLongitude())
+				.paymentStatus(obj.getPaymentStatus())
+				.status(obj.getStatus())
+				.build();
 	}
 
 	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
