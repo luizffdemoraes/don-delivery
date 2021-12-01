@@ -5,8 +5,10 @@ public enum PaymentStatus {
     PENDING(1),
     DEBIT(2),
     CREDIT(3),
-    WHATSAPP(4),
-    CANCELED(5);
+    FOOD_CARD(4),
+    PIX(5),
+    WHATSAPP(6),
+    CANCELED(7);
 
     private Integer cod;
 

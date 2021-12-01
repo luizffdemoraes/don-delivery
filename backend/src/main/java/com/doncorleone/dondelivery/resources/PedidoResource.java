@@ -46,25 +46,13 @@ public class PedidoResource {
 		return ResponseEntity.ok().body(list);
 	}
 
-	@PutMapping("/{id}/route")
-	public ResponseEntity<Pedido> setRoute(@PathVariable Integer id) {
-		Pedido dto = service.setRoute(id);
+	@PutMapping("/{id}/status/{idOrder}")
+	public ResponseEntity<Pedido> setOrder(@PathVariable Integer id, @PathVariable Integer idOrder) {
+		Pedido dto = service.setOrder(id, idOrder);
 		return ResponseEntity.ok().body(dto);
 	}
 
-	@PutMapping("/{id}/delivered")
-	public ResponseEntity<Pedido> setDelivered(@PathVariable Integer id) {
-		Pedido dto = service.setDelivered(id);
-		return ResponseEntity.ok().body(dto);
-	}
-
-	@PutMapping("/{id}/canceled")
-	public ResponseEntity<Pedido> setCanceled(@PathVariable Integer id) {
-		Pedido dto = service.setCanceled(id);
-		return ResponseEntity.ok().body(dto);
-	}
-
-	@PutMapping("/{id}/payment/{idPayment}")
+	@PutMapping("/{id}/pagamento/{idPayment}")
 	public ResponseEntity<Pedido> setPayment(@PathVariable Integer id, @PathVariable Integer idPayment) {
 		Pedido dto = service.setPayment(id, idPayment);
 		return ResponseEntity.ok().body(dto);

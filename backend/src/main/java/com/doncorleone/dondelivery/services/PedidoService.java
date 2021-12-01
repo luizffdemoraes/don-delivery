@@ -136,4 +136,10 @@ public class PedidoService {
 		return order;
 	}
 
+	public Pedido setOrder(Integer id, Integer idOrder) {
+		Pedido order = repo.getById(id);
+		order.setStatus(OrderStatus.toEnum(idOrder));
+		order = repo.save(order);
+		return order;
+	}
 }
