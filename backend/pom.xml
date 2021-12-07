@@ -15,7 +15,6 @@
     <description>Don Corleone pizzeria project</description>
     <properties>
         <java.version>11</java.version>
-        <open-api-version>1.5.2</open-api-version>
     </properties>
 
     <dependencies>

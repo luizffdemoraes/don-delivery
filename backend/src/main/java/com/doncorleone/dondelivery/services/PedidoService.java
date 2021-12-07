@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -57,7 +56,6 @@ public class PedidoService {
 		obj.setStatus(OrderStatus.PENDING);
 		obj.setPaymentStatus(PaymentStatus.PENDING);
 		obj = repo.save(obj);
-
 
 		for (ItemPedido ip : obj.getItens()) {
 			ip.setProduto(produtoService.find(ip.getProduto().getId()));

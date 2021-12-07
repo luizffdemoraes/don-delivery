@@ -68,7 +68,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/produtos").permitAll()
-                .antMatchers(HttpMethod.PUT, "/pedidos/all").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/pedidos/all").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/pedidos").hasAnyRole("OPERATOR", "ADMIN")
                 .anyRequest().authenticated()
                 .and().csrf().disable()
