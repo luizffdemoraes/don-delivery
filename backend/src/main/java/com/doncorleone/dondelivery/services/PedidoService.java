@@ -97,12 +97,6 @@ public class PedidoService {
 		return list;
 	}
 
-	@Transactional(readOnly = true)
-	public List<Pedido> findAll() {
-		List<Pedido> list = repo.findAll();
-		return list;
-	}
-
 	@Transactional
 	public Pedido setDelivered(Integer id) {
 		Pedido order = repo.getById(id);

@@ -38,8 +38,8 @@ public class PedidoResource {
 
 
 	@GetMapping("/all")
-	public ResponseEntity<List<Pedido>> findAll(){
-		List<Pedido> list = service.findAll();
+	public ResponseEntity<Page<Pedido>> findAll(Pageable pageable){
+		Page<Pedido> list = service.findAllPaged(pageable);
 		return ResponseEntity.ok().body(list);
 	}
 
