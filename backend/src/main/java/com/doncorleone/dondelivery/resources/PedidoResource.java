@@ -35,7 +35,7 @@ public class PedidoResource {
 		return ResponseEntity.created(uri).body(pedidoResponse);
 	}
 
-	@RequestMapping(value = "/all", method=RequestMethod.GET)
+	@RequestMapping(value = "/paged", method=RequestMethod.GET)
 	public ResponseEntity<Page<Pedido>> findAll(Pageable pageable){
 		Page<Pedido> list = service.findAllPaged(pageable);
 		return ResponseEntity.ok().body(list);
