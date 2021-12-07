@@ -8,7 +8,8 @@ public enum PaymentStatus {
     FOOD_CARD(4),
     PIX(5),
     WHATSAPP(6),
-    CANCELED(7);
+    CANCELED(7),
+    MONEY(8);
 
     private Integer cod;
 
