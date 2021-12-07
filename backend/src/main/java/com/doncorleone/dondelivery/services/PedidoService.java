@@ -66,7 +66,6 @@ public class PedidoService {
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
 
-
 		return PedidoResponse.builder()
 				.id(obj.getId())
 				.descricao(obj.getDescricao())

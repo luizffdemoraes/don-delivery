@@ -12,7 +12,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.List;
 
 
 @RestController
@@ -35,7 +34,6 @@ public class PedidoResource {
 				.buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(pedidoResponse);
 	}
-
 
 	@GetMapping("/all")
 	public ResponseEntity<Page<Pedido>> findAll(Pageable pageable){
@@ -64,6 +62,4 @@ public class PedidoResource {
 		Pedido dto = service.setPayment(id, idPayment);
 		return ResponseEntity.ok().body(dto);
 	}
-
 }
-
