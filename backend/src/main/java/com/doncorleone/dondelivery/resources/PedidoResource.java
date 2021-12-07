@@ -36,6 +36,13 @@ public class PedidoResource {
 		return ResponseEntity.created(uri).body(pedidoResponse);
 	}
 
+
+	@GetMapping("/all")
+	public ResponseEntity<List<Pedido>> findAll(){
+		List<Pedido> list = service.findAll();
+		return ResponseEntity.ok().body(list);
+	}
+
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Page<Pedido>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page,
