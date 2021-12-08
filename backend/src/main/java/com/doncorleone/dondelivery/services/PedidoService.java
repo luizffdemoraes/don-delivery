@@ -89,8 +89,9 @@ public class PedidoService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Pedido> findAllPaged(Pageable pageable) {
-		Page<Pedido> list = repo.findAll(pageable);
+	public Page<Pedido> findAllPaged(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Page<Pedido> list = repo.findAll(pageRequest);
 		return list;
 	}
 

@@ -36,8 +36,12 @@ public class PedidoResource {
 	}
 
 	@RequestMapping(value = "/paged", method=RequestMethod.GET)
-	public ResponseEntity<Page<Pedido>> findAll(Pageable pageable){
-		Page<Pedido> list = service.findAllPaged(pageable);
+	public ResponseEntity<Page<Pedido>> findAll(
+            @RequestParam(value="page", defaultValue="0") Integer page,
+            @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
+            @RequestParam(value="orderBy", defaultValue="instante") String orderBy,
+            @RequestParam(value="direction", defaultValue="DESC") String direction) {
+		Page<Pedido> list = service.findAllPaged(page, linesPerPage, orderBy, direction);
 		return ResponseEntity.ok().body(list);
 	}
 
