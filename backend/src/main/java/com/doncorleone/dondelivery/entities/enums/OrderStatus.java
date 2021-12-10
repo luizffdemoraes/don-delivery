@@ -3,9 +3,10 @@ package com.doncorleone.dondelivery.entities.enums;
 public enum OrderStatus {
 
     PENDING(1),
-    EN_ROUTE(2),
-    DELIVRED(3),
-    CANCELED(4);
+    IN_PREPARATION(2),
+    EN_ROUTE(3),
+    DELIVRED(4),
+    CANCELED(5);
 
     private Integer cod;
 
